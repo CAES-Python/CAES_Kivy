@@ -7,6 +7,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.switch import Switch
+from kivy.garden.knob import Knob
 
 
 from kivy.properties import ListProperty, ObjectProperty
