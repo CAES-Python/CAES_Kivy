@@ -1,0 +1,43 @@
+#: import MeshLinePlot kivy.garden.graph.MeshLinePlot
+
+<NuclearControlPanel>:
+	BoxLayout:
+		orientation: 'vertical'
+
+		Graph: 
+			id: my_plot
+			xlabel: "Time (s)"
+			ylabel: "Level"
+			ymax:15
+			ymin: -10
+		BoxLayout:
+			Knob:
+				id: knob1
+				size: 100, 100
+				value: 1
+				min: 1
+				max: 11
+				step: 1
+				knobimg_source: "/usr/lib/python2.7/dist-packages/kivy/garden/knob/img/knob_metal.png"
+				knobimg_size: 0.9
+				show_label: True
+				show_marker: True	
+			Label:
+				id:label
+				text: str(knob1.value-1)
+		Button:
+			id: Stop_button
+			size_hint:[0.1, 1]
+			text: 'SCRAM!!!'
+			font_size: 30
+			on_press:app.root.stop
+
+			canvas:
+				Color:
+					rgba: 1, 0, 0, 0.5
+				Rectangle:
+					size: self.size
+					pos: self.pos
+	
+
+
