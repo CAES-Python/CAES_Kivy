@@ -12,7 +12,7 @@ from kivy.uix.slider import Slider
 from kivy.garden.knob import Knob
 from kivy.garden.graph import Graph, MeshLinePlot, SmoothLinePlot, Plot
 
-from kivy.clock import Clock
+from kivy.clock import Clock as clock
 
 from kivy.properties import ListProperty, ObjectProperty
 
@@ -24,7 +24,10 @@ from kivy.graphics.context_instructions import Color
 import random
 from math import *
 import math
+import time
 import collections
+
+from scipy import *
 
 
 
@@ -35,40 +38,60 @@ class NuclearControlPanel(BoxLayout):
 		knob_value = self.ids.knob1.value
 		graph =MeshLinePlot(color=[0, 0, 1, 1]) 
 		self.input_plot = MeshLinePlot(color=[0, 1, 0, 1])
-		self.knob_plotpoints =(0,knob_value)
-		self.knob_plotpoints = zip(range(len(self.knob_plotpoints)), self.ids.knob1.value)
+
+		self.xvals = collections.deque(maxlen=100)
+		self.yvals = [1,2,3,6,3,7,9,3,11,22,16,23]#[knob_value]
+				
+
+			
 		
 		self.ids.my_plot.add_plot(self.input_plot)
 		
-		for i in xrange(10):
+		
 
-			self.wave1 = self.ids.knob1.value
-			self.wave2 = self.ids.knob1.value
-			Clock.schedule_interval(self.update_points, 1 / 60)
-			Clock.schedule_interval(self.update_graph, 1 / 60)
+		
+		for i in self.yvals:
 
-			Clock.schedule_interval(lambda *args: self.add_points(self.wave1, self.wave2), 0.2)
-			self.ids.my_plot.add_plot(graph)
+			wave1 = self.yvals
+		        
+		        clock.schedule_interval(self.update_points, 1 / 100)
+		        clock.schedule_interval(self.update_graph, 1 / 100)
+
+		        clock.schedule_interval(lambda *args: self.add_points(wave1), 0.2)
+		        #self.ids.my_plot.add_plot(self.input_plot)
 
 
 	def update_points(self, *args):
-		self.input_plot.points = zip(range(len(self.knob_plotpoints)), self.knob_plotpoints)
+		for x in range(len(self.xvals)):
+			self.yvals.append(self.ids.knob1.value)
+			x+=1	
+		self.input_plot.points = zip(range(len(self.xvals)), self.yvals)
 		
 
 	def update_graph(self, *args):
-		if len(self.knob_plotpoints) >3:
+		if len(self.xvals) >3:
 			
-			self.ids.my_plot.ymin= 0
-			self.ids.my_plot.ymax= 2 #math.ceil(max(self.knob_plotpoints))
-
-	def add_points(self,active,predictive):
-		self.knob_plotpoints.append(active)
+			self.ids.my_plot.ymin= math.ceil(min(self.yvals))
+			self.ids.my_plot.ymax= math.ceil(max(self.yvals))
+			self.ids.my_plot.add_plot(self.input_plot)
 	
+	def change_knob(self,*args):
+		self.yvals.append(self.ids.knob1.value)
+
+
+	def add_points(self,active):
+		self.xvals.append(active)
+		for x in range(len(self.xvals)):
+			self.change_knob()
+			
 	def pause():
 		time.sleep(5)
-	def stop():
-		Clock.cancel()
-
+	def stop(self):
+		clock.idle()
+	def start(self):
+		pass
+	def on_touch_move(self,touch):
+		self.yvals.append(self.ids.knob1.value)
 class NuclearApp(App):
 	def build(self):
 		return NuclearControlPanel()
