@@ -169,14 +169,12 @@
 					min:0
 					value:1
 
-		AnchorLayout:
-			anchor_x:'right'
-			anchor_y:'bottom'
+
 			BoxLayout:
-				orientation:'vertical'
+
 				Button:
 					id: Stop_button
-					size_hint:None,None
+					size_hint:1,1
 					text: 'Scram!!!'
 					font_size: 30
 					on_press:root.stop()
@@ -189,7 +187,7 @@
 							pos: self.pos
 				Button:
 					id:menubuttonnuke
-					size_hint:None,None
+					size_hint:1,1
 					text: 'Menu'
 					font_size: 30
 					on_release: app.root.current ='menu'

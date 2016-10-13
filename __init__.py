@@ -112,7 +112,7 @@ class Gauge(Widget):
 
         '''
         self._needle.center_x = self._gauge.center_x
-        self._needle.center_y = self._gauge.pos[1]
+        self._needle.center_y = self._gauge.center_y - self._gauge.center_y/17.5
         self._needle.rotation = ( self.unit) - (self.value * self.unit)
 
 
