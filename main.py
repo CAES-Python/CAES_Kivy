@@ -21,6 +21,8 @@ from kivy.clock import Clock as clock
 from kivy.properties import ListProperty, ObjectProperty
 from kivy.config import Config
 
+from kivy.gesture import Gesture,GestureDatabase
+
 from kivy.graphics.vertex_instructions import (Rectangle,
                                                Ellipse,
                                                Line)
@@ -34,6 +36,11 @@ import sys
 from math import *
 
 
+import gesture_box as gesture
+
+
+class Runner(gesture.GestureBox):
+	pass
 
 class NCPScreen(Screen):
 	pass
@@ -99,3 +106,4 @@ class NuclearApp(App):
 
 if __name__ == "__main__":
 	NuclearApp().run()
+

@@ -1,6 +1,12 @@
 #: import MeshLinePlot kivy.garden.graph.MeshLinePlot
+<Runner>:
+	#Handling the gesture event.
+	on_left_to_right_line:   app.root.transition.direction = 'right'
+	on_right_to_left_line:  app.root.transition.direction = 'left'
+	on_down_to_up_line:  app.root.transition.direction = 'up'
 
 <NuclearScreenManager>:
+	id: manager
 	MenuScreen:	
 	NuclearControlPanel:
 	KnobScreen:
@@ -8,6 +14,7 @@
 
 <MenuScreen>:
 	name: 'menu'
+
 	BoxLayout:
 		orientation: 'vertical'
 		Label:
@@ -23,10 +30,13 @@
 				text:'Knob Panel'
 				font_size:30
 				on_release:app.root.current ='knob'
-
+		
 <NuclearControlPanel>:
 
 	name: 'ncp'
+	Runner: 
+		on_down_to_up_line: app.root.current = 'menu'
+		on_right_to_left_line: app.root.current = 'knob'
 	FloatLayout:
 		BoxLayout:
 			orientation:'vertical'
@@ -50,20 +60,20 @@
 					id: gauge1
 					value:knob1.value
 					max: 50
-
+					file_gauge:"~/.kivy/garden/garden.gauge/cadran.png"
 				Gauge:
 					id: gauge2
-
+					file_gauge:"~/.kivy/garden/garden.gauge/cadran.png"
 					value:knob2.value
 
 				Gauge:
 					id: gauge3
 					value:knob3.value
-
+					file_gauge:"~/.kivy/garden/garden.gauge/cadran.png"
 				Gauge:
 					id: gauge4
 					value:knob4.value
-
+					file_gauge:"~/.kivy/garden/garden.gauge/cadran.png"
 			##################################################################Knob Line###########################################################
 			GridLayout:
 				center:
@@ -201,17 +211,15 @@
 	
 <KnobScreen>:
 	name: 'knob'
+	Runner: 
+		on_down_to_up_line: app.root.current = 'menu'
+		on_left_to_right_line: app.root.current = 'ncp'
 	BoxLayout:
 		orientation: 'vertical'
 
 		Gauge: 
 			value: knob1.value
-			canvas:
-				Color:
-					rgba:1,0,0,0.5
-				Rectangle:
-					size: self.size
-					pos:self.pos
+			file_gauge:"~/.kivy/garden/garden.gauge/cadran.png"
 		BoxLayout:
 			Knob:
 				id: knob1
@@ -265,6 +273,7 @@
 				text: 'Menu'
 				font_size: 30
 				on_release: app.root.current ='menu'
+
 
 
 
