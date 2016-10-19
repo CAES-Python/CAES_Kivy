@@ -3,10 +3,10 @@
     ====
 
     The :class:`Gauge` widget creates a component that looks like a
-    control Knob or Dial 
-    To configure a knob a max/min, slope and step values should be provided.
-    Additionally, knobimg_source could be set to load
-    a texture that visually represents the knob.
+    control Gauge or Dial 
+    To configure a Gauge a max/min, slope and step values should be provided.
+    Additionally, gauge_img_source could be set to load
+    a texture that visually represents the Gauge.
 
 """
 __all__     = ('NuclearGauge',)
@@ -31,79 +31,58 @@ from kivy.uix.progressbar import ProgressBar
 import os,inspect
 Builder.load_string('''
 #
-#    Knob
+#    Gauge
 #    ====
-#     To create a basic knob (in a kv file):
+#     To create a basic Gauge (in a kv file):
 #
-#     Knob:
+#     Gauge:
 #       size:               100, 100
 #       min:                0
 #       max:                100
 #       step:               1
 #       slope:              1
-#       value:              0                       # Default position of knob.
-#       knobimg_source:     "img/knob_metal.png"    # Knob texture
+#       value:              0                       # Default position of Gauge.
+#       gauge_img_source:     "img/Gauge_metal.png"    # Gauge texture
 #       show_marker:        False                   # Do not show surrounding marker
 #
-#     To create a knob with a surrounding marker:
+#     To create a Gauge with a surrounding marker:
 #
-#     Knob:
+#     Gauge:
 #       size:               100, 100
 #       min:                0
 #       max:                100
 #       step:               1
 #       slope:              1
-#       value:              0                       # Default position of knob.
-#       knobimg_source:     "img/knob_metal.png"    # Knob texture
+#       value:              0                       # Default position of Gauge.
+#       gauge_img_source:     "img/Gauge_metal.png"    # Gauge texture
 #       show_marker:        True                    # Show surrounding marker
 #       marker_img:         "img/bline.png"         # Marker texture image
-#       knob_size:          0.9                     # Scales knob size to leave space for marker
+#       Gauge_size:          0.9                     # Scales Gauge size to leave space for marker
 #       markeroff_color:    0, 0, 0, 0
 
 #: 
-<Knob>
+<Gauge>
     size_hint: None, None
 
     canvas.before:
-        Color:
-            rgba: self.markeroff_color
-        Ellipse:
-            pos: self.pos
-            size:self.size[0], self.size[1]
-            angle_start: 0
-            angle_end: 360
-            source: self.markeroff_img
-	    do_scale: True
 
-        Color:
-            rgba: self.marker_color
-        Ellipse:
-            pos: self.pos
-            size: self.size[0], self.size[1]
-            angle_start: self.marker_startangle
-            angle_end: self._angle + self.marker_ahead if self._angle > self.marker_startangle else self.marker_startangle
-            source: self.marker_img
-	    do_scale: True
 
-        Color:
-            rgba: self.knobimg_bgcolor
+      
         Ellipse:
-            pos: self.pos[0] + (self.size[0] * (1 - self.knobimg_size))/2, self.pos[1] + (self.size[1] * (1 - self.knobimg_size)) / 2
-            size: self.size * (self.knobimg_size), self.size * (self.knobimg_size) #self.size[0] * (self.knobimg_size), self.size[1] * (self.knobimg_size)
+            pos: self.pos[0] + (self.size[0] * (1 - self.Gaugeimg_size))/2, self.pos[1] + (self.size[1] * (1 - self.Gaugeimg_size)) / 2
+            size: self.size * (self.Gaugeimg_size), self.size * (self.Gaugeimg_size) #self.size[0] * (self.Gaugeimg_size), self.size[1] * (self.Gaugeimg_size)
 	    do_scale: True
 	    color:
 		rgba: [1,0,0,.5]
 
-        Color:
-            rgba: self.knobimg_color
         PushMatrix
         Rotate:
             angle: 360 - self._angle
             origin: self.center
         Rectangle:
-            pos: self.pos[0] + (self.size[0] * (1 - self.knobimg_size)) /2, self.pos[1] + (self.size[1] * (1 - self.knobimg_size)) / 2
-            size: self.size[0] * (self.knobimg_size), self.size[1] * (self.knobimg_size) # self.size[0] * (self.knobimg_size), self.size[1] * (self.knobimg_size)
-            source: Image(self.knobimg_source)
+            pos: self.pos[0] + (self.size[0] * (1 - self.Gaugeimg_size)) /2, self.pos[1] + (self.size[1] * (1 - self.Gaugeimg_size)) / 2
+            size: self.size[0] * (self.Gaugeimg_size), self.size[1] * (self.Gaugeimg_size) # self.size[0] * (self.Gaugeimg_size), self.size[1] * (self.Gaugeimg_size)
+            source: Image(self.gauge_img_source)
 	    do_scale: True
 
     canvas:
@@ -111,8 +90,8 @@ Builder.load_string('''
 
 ''')
 
-class Knob(Widget):
-    """Class for creating a Knob widget."""
+class Gauge(Widget):
+    """Class for creating a Gauge widget."""
 
     min = NumericProperty(0)
     '''Minimum value for value :attr:`value`.
@@ -127,22 +106,22 @@ class Knob(Widget):
     '''
 
     range = ReferenceListProperty(min, max)
-    ''' Range of the values for Knob.
+    ''' Range of the values for Gauge.
     :attr:`range` is a :class:`~kivy.properties.ReferenceListProperty` of
     (:attr:`min`, :attr:`max`).
     '''
 
     value = NumericProperty(0)
-    '''Current value of the knob. Set :attr:`value` when creating a knob to
+    '''Current value of the Gauge. Set :attr:`value` when creating a Gauge to
     set its initial position. An internal :attr:`_angle` is calculated to set
-    the position of the knob.
+    the position of the Gauge.
     :attr:`value` is a :class:`~kivy.properties.NumericProperty` and defaults
     to 0.
     '''
 
     step = BoundedNumericProperty(1, min=0)
-    '''Step interval of knob to go from min to max. An internal
-    :attr:`_angle_step` is calculated to set knob step in degrees.
+    '''Step interval of Gauge to go from min to max. An internal
+    :attr:`_angle_step` is calculated to set Gauge step in degrees.
     :attr:`step` is a :class:`~kivy.properties.BoundedNumericProperty`
     and defaults to 1 (min=0).
     '''
@@ -153,113 +132,45 @@ class Knob(Widget):
     So, for higher values of curve the contol is more reactive, and conversely.
     '''
 
-    knobimg_source = StringProperty("")
-    '''Path of texture image that visually represents the knob. Use PNG for
+    gauge_img_source = StringProperty("")
+    '''Path of texture image that visually represents the Gauge. Use PNG for
     transparency support. The texture is rendered on a centered rectangle of
-    size = :attr:`size` * :attr:`knobimg_size`.
-    :attr:`knobimg_source` is a :class:`~kivy.properties.StringProperty`
+    size = :attr:`size` * :attr:`Gaugeimg_size`.
+    :attr:`gauge_img_source` is a :class:`~kivy.properties.StringProperty`
     and defaults to empty string.
     '''
 
-    knobimg_color = ListProperty([1, 1, 1, 1])
-    '''Color to apply to :attr:`knobimg_source` texture when loaded.
-    :attr:`knobimg_color` is a :class:`~kivy.properties.ListProperty`
-    and defaults to [1,1,1,1].
+     gauge_type = StringProperty(" ")
+    '''Type of gauge desired. Types included are 'Full' (meaning 360 deg), '3/4' (270 degrees) or 'half' (180 deg).
+    :attr:`gauge_type` is a :class:`~kivy.properties.StringProperty`
+    and defaults to empty string.
     '''
 
-    knobimg_size = BoundedNumericProperty(0.9, max=1.0, min=0.1)
-    ''' Internal proportional size of rectangle that holds
-    :attr:`knobimg_source` texture.
-    :attr:`knobimg_size` is a :class:`~kivy.properties.BoundedNumericProperty`
-    and defaults to 0.9.
-    '''
-
-    show_marker = BooleanProperty(True)
-    ''' Shows/hides marker surrounding knob. use :attr:`knob_size` < 1.0 to
-    leave space to marker.
-    :attr:`show_marker` is a :class:`~kivy.properties.BooleanProperty`
-    and defaults to True.
-    '''
-
-    marker_img = StringProperty("")
-    '''Path of texture image that visually represents the knob marker. The
-    marker is rendered in a centered Ellipse (Ellipse) with the same size of
-    the widget and goes from angle_start=:attr:`marker_startangle` to
-    angle_end=:attr:`_angle`.
-    :attr:`marker_img` is a :class:`~kivy.properties.StringProperty` and
-    defaults to "".
-    '''
-
-    marker_color = ListProperty([1, 1, 1, 1])
-    '''Color to apply to :attr:`marker_img` texture when loaded.
-    :attr:`marker_color` is a :class:`~kivy.properties.ListProperty`
-    and defaults to [1,1,1,1].
-    '''
-
-    knobimg_bgcolor = ListProperty([0, 0, 0, 1])
-    ''' Background color behind :attr:`knobimg_source` texture.
-    :attr:`value` is a :class:`~kivy.properties.ListProperty` and defaults
-    to [0,0,0,1].
-    '''
-
-    markeroff_img = StringProperty("")
-    '''Path of texture image that visually represents the knob marker where
-    it's off, that is, parts of the marker that haven't been reached yet by
-    the knob (:attr:`value`).
-    :attr:`markeroff_img` is a :class:`~kivy.properties.StringProperty`
-    and defaults to "".
-    '''
-
-    markeroff_color = ListProperty([0, 0, 0, 0])
-    '''Color applied to :attr:`markeroff_img` int the Canvas.
-    :attr:`markeroff_color` is a :class:`~kivy.properties.ListProperty`
-    and defaults to [0,0,0,0].
-    '''
-
-    marker_startangle = NumericProperty(0)
-    '''Starting angle of Ellipse where :attr:`marker_img` is rendered.
-    :attr:`value` is a :class:`~kivy.properties.NumericProperty` and defaults
-    to 0.
-    '''
-
-    marker_ahead = NumericProperty(0)
-    ''' Adds degrees to angle_end of marker (except when :attr:`value` == 0).
-    :attr:`marker_ahead` is a :class:`~kivy.properties.NumericProperty`
-    and defaults to 0.
-    '''
+  
 
     _angle          = NumericProperty(0)            # Internal angle calculated from value.
     _angle_step     = NumericProperty(0)            # Internal angle_step calculated from step.
 
     def __init__(self, *args, **kwargs):
-        super(Knob, self).__init__(*args, **kwargs)
+        super(Gauge, self).__init__(*args, **kwargs)
         self.bind(show_marker   =   self._show_marker)
         self.bind(value         =   self._value)
 
     def _value(self, instance, value):
         self._angle     =   pow( (value - self.min)/(self.max - self.min), 1./self.curve) * 360.
-        self.on_knob(value)
+        self.on_Gauge(value)
 
     def _show_marker(self, instance, flag):
         # "show/hide" marker.
         if flag:
-            self.knobimg_bgcolor[3] = 1
+            self.Gaugeimg_bgcolor[3] = 1
             self.marker_color[3] = 1
             self.markeroff_color[3] = 1
         else:
-            self.knobimg_bgcolor[3] = 0
+            self.Gaugeimg_bgcolor[3] = 0
             self.marker_color[3] = 0
             self.markeroff_color[3] = 0
 
-
-    def on_touch_down(self, touch):
-        if self.collide_point(*touch.pos):
-            self.update_angle(touch)
-
-
-    def on_touch_move(self, touch):
-        if self.collide_point(*touch.pos):
-            self.update_angle(touch)
 
 
     def update_angle(self, touch):
@@ -292,5 +203,5 @@ class Knob(Widget):
 
 
     #TO OVERRIDE
-    def on_knob(self, value):
-        pass #Knob values listenerr
+    def on_Gauge(self, value):
+        pass #Gauge values listener
