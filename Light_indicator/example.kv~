@@ -13,6 +13,6 @@ BoxLayout:
 			color: 'green'
 	Button:
 		text: 'On'
-		on_release:Li1.turn_on_off()
+		on_release:Li1.change_color()
 
 

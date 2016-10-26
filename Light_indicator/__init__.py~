@@ -78,7 +78,7 @@ class Light_indicator(Widget):
 '''
 canvas:
 	Color:
-		rgba: 1,0,0,1 #root.change_color()
+		rgba: root.change_color()
 	Ellipse:
 		size: 50,50 
 		pos: root._setting.center'''
