@@ -40,7 +40,8 @@ import os,inspect
 class DummyClass: 
 	pass
 
-
+class Light(Widget):
+	Builder.load_file('light.kv')
 
 class Light_indicator(Widget):
 	'''
@@ -57,7 +58,8 @@ class Light_indicator(Widget):
 	color = StringProperty("")# name of color to refrence the dictionary.
 	
 	off_color = color_dictionary['off']# the off color of the light.
-    
+    	_light = Light()
+
 
 
 	def __init__(self, **kwargs):
@@ -70,34 +72,29 @@ class Light_indicator(Widget):
 			)
 		_img_setting = Image(source=self.file_setting, size=(self.size_setting, 
 			self.size_setting))
+		_light = Light()
+		_light.pos = self._setting.center
 		self._setting.add_widget(_img_setting)
+		self._setting.add_widget(_light)
 		self.add_widget(self._setting)
 		self.bind(pos=self._update)
 		self.bind(size=self._update)
- 		Builder.load_string(
-'''
-canvas:
-	Color:
-		rgba: root.change_color()
-	Ellipse:
-		size: 50,50 
-		pos: root._setting.center'''
-		)
 
 	def _update(self, *args):
 		
 		self._setting.pos = self.pos
-		self.change_color()
+		self._light.pos = self._setting.center
+		self._light.Color = self.change_color()
 		
 	def change_color(self):
 		
 		if self.bol == True:
 			try:
-				color_rgba = self.color_dictionary[str(self.color)]
+				color_rgba = self.color_dictionary[self.color]
 				print color_rgba
 				print self.color_dictionary[str(self.color)]
 			except:
-				pass#print 'Your color doesn\'t exist in the dictionary. Add it to the __init__.py file to use that color.  '
+				print 'Your color doesn\'t exist in the dictionary. Add it to the __init__.py file to use that color.  '
 		else:
 			color_rgba = self.off_color
 			print color_rgba
@@ -126,10 +123,10 @@ class LightApp(App):
 
 				
 
-			mygauge = Light_indicator(color='red')
+			mylight = Light_indicator()
 			box = BoxLayout(orientation='horizontal', spacing=5, padding=5)
 			Clock.schedule_once(turn_on_off())
-			box.add_widget(mygauge)
+			box.add_widget(mylight)
 
 
 			return box

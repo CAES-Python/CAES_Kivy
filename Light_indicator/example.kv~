@@ -3,16 +3,23 @@ BoxLayout:
 	BoxLayout:
 		orientation: 'vertical'
 		Light_indicator:
-			id:Li1
+			id:R
 			color: 'red'
 		Light_indicator:
-			id:Li1
+			id:B
 			color: 'blue'
 		Light_indicator:
-			id:Li1
+			id:G
 			color: 'green'
-	Button:
-		text: 'On'
-		on_release:Li1.change_color()
+	BoxLayout:	
+		Button:
+			text: 'R'
+			on_release:R.turn_on_off()
+		Button:
+			text: 'B'
+			on_release:B.turn_on_off()
+		Button:
+			text: 'G'
+			on_release:G.turn_on_off()
 
 
