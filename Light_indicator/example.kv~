@@ -27,7 +27,7 @@ BoxLayout:
 		Button:
 			text: 'B'
 			on_release:B.turn_on_off()
-		Button:
+				Button:
 			text: 'P'
 			on_release:P.turn_on_off()
 

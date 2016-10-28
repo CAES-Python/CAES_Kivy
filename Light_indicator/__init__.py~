@@ -71,7 +71,7 @@ class Light_indicator(Widget):
 			do_translation=False
 			)
 		self._light = Light(light_color = self.get_color())
-		self._light.pos = (100,100)
+		self._light.pos = (100,self._setting.center_y)
 		_img_setting = Image(source=self.file_setting, size=(self.size_setting, 
 			self.size_setting))
 
