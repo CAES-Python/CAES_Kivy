@@ -71,13 +71,14 @@ class Light_indicator(Widget):
 			do_translation=False
 			)
 		self._light = Light(light_color = self.get_color())
-		self._light.pos = (100,self._setting.center_y)
+		self._light.pos = (100,100)
 		_img_setting = Image(source=self.file_setting, size=(self.size_setting, 
 			self.size_setting))
 
 		self._setting.add_widget(_img_setting)
+		self._setting.add_widget(self._light)
 		self.add_widget(self._setting)
-		self.add_widget(self._light)
+		
 		self.bind(pos=self._update)
 		self.bind(size=self._update)
 		Clock.schedule_interval(self.my_schedule, 0.1)
@@ -87,7 +88,7 @@ class Light_indicator(Widget):
 		
 		self._setting.pos = self.pos
 		self._setting.size = self.size
-		self._light.pos = self._setting.center#(100,self._setting.center_y)
+		self._light.pos = (100,100)
 		self._light.light_color = self.get_color()
 #self.get_color()
 		
