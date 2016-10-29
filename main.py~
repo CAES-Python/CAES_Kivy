@@ -100,7 +100,7 @@ class NuclearControlPanel(Screen):
 		self.knob1value = self.knob1.value
 		self.value = self.knob1value
 		if self.value >75:
-			self.warning1.color = 'red'
+			self.warning1.turn_on_off()
 			self.warning2.turn_on_off()
 			self.warning3.turn_on_off()
 			self.warning4.turn_on_off()

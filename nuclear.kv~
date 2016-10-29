@@ -44,18 +44,18 @@
 				rows: 1
 				spacing: 70, 40 
 			##################################################################Light Line#######################################################################
-				Light_indicator:	
-					id:warning1
-					color:'red'
-				Light_indicator:	
-					id:warning2
-					color:'red'
-				Light_indicator:	
-					id:warning3
-					color:'red'
-				Light_indicator:	
-					id:warning4
-					color:'red'
+			Light_indicator:	
+				id:warning1
+				color:'red'
+			Light_indicator:	
+				id:warning2
+				color:'red'
+			Light_indicator:	
+				id:warning3
+				color:'red'
+			Light_indicator:	
+				id:warning4
+				color:'red'
 
 			GridLayout:
 				cols: 4
