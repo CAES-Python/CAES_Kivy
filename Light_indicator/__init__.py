@@ -42,23 +42,65 @@ class DummyClass:
 	pass
 
 class Light(Widget):
-	Builder.load_file('light.kv')
+	dummy = DummyClass
+	mypath = os.path.dirname(os.path.abspath(inspect.getsourcefile(dummy)))
+#	kv_file = StringProperty(mypath + os.sep + "light.kv")
+	Builder.load_file("light.kv")	
 	light_color = ListProperty([1,0,0,1])
+#	def __init__(self, **kwargs):
+#		super(Light, self).__init__(**kwargs)
+#		Builder.load_file(self.kv_file) #Builder.load_file("light.kv")
+
+
 class Light_indicator(Widget):
 	'''
 	Light_indicator class
+	A basic Kivy example:
+BoxLayout:
+	BoxLayout:
+		orientation: 'vertical'
+		Light_indicator:
+			id:R
+			color: 'red'
+		Light_indicator:
+			id:G
+			color: 'green'
+		Light_indicator:
+			id:B
+			color: 'blue'
+			off_color: 'red'
+		Light_indicator:
+			id:P
+			color: 'purple'
 
+	BoxLayout:
+		orientation: 'vertical'	
+		Button:
+			text: 'R'
+			on_release:R.turn_on_off()
+		Button:
+			text: 'G'
+			on_release:G.turn_on_off()
+
+		Button:
+			text: 'B'
+			on_release:B.turn_on_off()
+		Button:
+			text: 'P'
+			on_release:P.turn_on_off()
+
+NOTE: Since 'purple' is not found in the color_dictionary of this file, an exception is raised and the program exits when the button is pressed. 
 	'''
 	dummy = DummyClass
 	mypath = os.path.dirname(os.path.abspath(inspect.getsourcefile(dummy)))
 	file_setting = StringProperty(mypath + os.sep + "setting.png")
 	size_setting = BoundedNumericProperty(256, min=128, max=256, errorvalue=128)
-	color_dictionary = {'red':[1,0,0,1], 'green':[0,1,0,1], 'blue':[0,0,1,1], 'yellow':[0,0.5,0.5,1], 'off':[0.5,0.5,0.5,1]}
+	color_dictionary = {'red':[1,0,0,1], 'green':[0,1,0,1], 'blue':[0,0,1,1], 'yellow':[1,1,0,1], 'grey':[0.5,0.5,0.5,1]}# dictionary that calls a color and returns a RGBa list.
       
-	bol = BooleanProperty(False) # The boolean that turns on and off the light.
-	color = StringProperty("")# name of color to refrence the dictionary.
+	_bol = False #BooleanProperty(False) # The boolean that turns on and off the light. Use the BooleanProperty if you what control in the kivy file.
+	color = StringProperty("yellow")# name of color to refrence the dictionary. Defaults to grey.
 	
-	off_color = color_dictionary['off']# the off color of the light.
+	off_color = StringProperty("grey")# name of the off_color to refrence the dictionary. Defaults to grey.
 
 	
 
@@ -94,7 +136,7 @@ class Light_indicator(Widget):
 		
 	def get_color(self):
 		color_rgba=self.off_color
-		if self.bol == True:
+		if self._bol == True:
 			try:
 				color_rgba = self.color_dictionary[self.color]
 
@@ -102,7 +144,7 @@ class Light_indicator(Widget):
 				print 'ERROR: Your color doesn\'t exist in the dictionary. Add it to the __init__.py file to use that color.  '
 				sys.exit()
 		else:
-			color_rgba = self.off_color
+			color_rgba = self.color_dictionary[self.off_color]
 			
 		
 		
@@ -110,12 +152,12 @@ class Light_indicator(Widget):
 
 
 	def turn_on_off(self):
-		if self.bol == False :
-			self.bol = True
-			self.get_color()
+		if self._bol == False :
+			self._bol = True
+			#self.get_color()
 		else:
-			self.bol = False
-			self.get_color() 
+			self._bol = False
+		self.get_color() 
 	def my_schedule(self,dt):
 		self._light.light_color = self.get_color()	
 

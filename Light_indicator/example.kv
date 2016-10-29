@@ -14,6 +14,9 @@ BoxLayout:
 		Light_indicator:
 			id:P
 			color: 'purple'
+		Light_indicator:
+			id:Y
+			off_color: 'green'
 
 	BoxLayout:
 		orientation: 'vertical'	
@@ -30,6 +33,8 @@ BoxLayout:
 		Button:
 			text: 'P'
 			on_release:P.turn_on_off()
-
+		Button:
+			text: 'Y'
+			on_release:Y.turn_on_off()
 
 
