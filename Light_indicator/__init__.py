@@ -154,10 +154,21 @@ NOTE: Since 'purple' is not found in the color_dictionary of this file, an excep
 	def turn_on_off(self):
 		if self._bol == False :
 			self._bol = True
-			#self.get_color()
+			
 		else:
 			self._bol = False
 		self.get_color() 
+
+	def turn_on(self):
+		if self._bol == False :
+			self._bol = True
+		self.get_color()
+
+	def turn_off(self):
+		if self._bol == True :
+			self._bol = False
+		self.get_color() 
+
 	def my_schedule(self,dt):
 		self._light.light_color = self.get_color()	
 
