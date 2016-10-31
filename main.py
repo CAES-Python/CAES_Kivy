@@ -85,7 +85,13 @@ class NuclearControlPanel(Screen):
 	def _finish_init(self,dt):
 		self.gauge1 = self.ids.gauge1
 		self.knob1 = self.ids.knob1
+		self.knob2 = self.ids.knob2
+		self.knob3 = self.ids.knob3
+		self.knob4 = self.ids.knob4
 		self.knob1value = self.knob1.value
+		self.knob2value = self.knob2.value
+		self.knob3value = self.knob3.value
+		self.knob4value = self.knob4.value
 		self.warning1 = self.ids.warning1
 		self.warning2 = self.ids.warning2
 		self.warning3 = self.ids.warning3
@@ -97,15 +103,43 @@ class NuclearControlPanel(Screen):
 		
 		
 		self.knob1 = self.ids.knob1
+		self.knob2 = self.ids.knob2
+		self.knob3 = self.ids.knob3
+		self.knob4 = self.ids.knob4
 		self.knob1value = self.knob1.value
-		self.value = self.knob1value
-		if self.value >75:
-			self.warning1.color = 'red'
+		self.knob2value = self.knob2.value
+		self.knob3value = self.knob3.value
+		self.knob4value = self.knob4.value
+		self.value1 = self.knob1value
+		self.value2 = self.knob2value
+		self.value3 = self.knob3value
+		self.value4 = self.knob4value
+
+		if self.value1 >75:
+			self.warning1.turn_on_off()
 			self.warning2.turn_on_off()
 			self.warning3.turn_on_off()
 			self.warning4.turn_on_off()
-#		else:
-#			self.warning. = 'grey'
+		elif self.value2 >50:
+			self.warning1.turn_on_off()
+			self.warning2.turn_on_off()
+			self.warning3.turn_on_off()
+			self.warning4.turn_on_off()
+		elif self.value3 >60:
+			self.warning1.turn_on_off()
+			self.warning2.turn_on_off()
+			self.warning3.turn_on_off()
+			self.warning4.turn_on_off()
+		elif self.value4 >85:
+			self.warning1.turn_on_off()
+			self.warning2.turn_on_off()
+			self.warning3.turn_on_off()
+			self.warning4.turn_on_off()
+		else:
+			self.warning1.turn_off()
+			self.warning2.turn_off()
+			self.warning3.turn_off()
+			self.warning4.turn_off()
 
 #Building the app. The program will look for the file "nuclear.kv" because the app is called Nuclear			
 class NuclearApp(App):

@@ -1,9 +1,9 @@
 #: import MeshLinePlot kivy.garden.graph.MeshLinePlot
 <Runner>:
 	#Handling the gesture event.
-	on_left_to_right_line:   app.root.transition.direction = 'right'
-	on_right_to_left_line:  app.root.transition.direction = 'left'
-	on_down_to_up_line:  app.root.transition.direction = 'up'
+	on_two_left_to_right_line:   app.root.transition.direction = 'right'
+	on_two_right_to_left_line:  app.root.transition.direction = 'left'
+	on_two_down_to_up_line:  app.root.transition.direction = 'up'
 # Layout the Screen Manager
 <NuclearScreenManager>:
 	id: manager
@@ -44,18 +44,18 @@
 				rows: 1
 				spacing: 70, 40 
 			##################################################################Light Line#######################################################################
-			Light_indicator:	
-				id:warning1
-				color:'red'
-			Light_indicator:	
-				id:warning2
-				color:'red'
-			Light_indicator:	
-				id:warning3
-				color:'red'
-			Light_indicator:	
-				id:warning4
-				color:'red'
+				Light_indicator:	
+					id:warning1
+					color:'red'
+				Light_indicator:	
+					id:warning2
+					color:'red'
+				Light_indicator:	
+					id:warning3
+					color:'red'
+				Light_indicator:	
+					id:warning4
+					color:'red'
 
 			GridLayout:
 				cols: 4
@@ -217,8 +217,8 @@
 
 
 	Runner: 
-		on_down_to_up_line: app.root.current = 'menu'
-#		on_right_to_left_line: app.root.current = 'knob'
+		on_two_down_to_up_line: app.root.current = 'menu'
+		on_two_right_to_left_line: app.root.current = 'knob'
 
 
 

@@ -1,9 +1,9 @@
 #: import MeshLinePlot kivy.garden.graph.MeshLinePlot
 <Runner>:
 	#Handling the gesture event.
-	on_left_to_right_line:   app.root.transition.direction = 'right'
-	on_right_to_left_line:  app.root.transition.direction = 'left'
-	on_down_to_up_line:  app.root.transition.direction = 'up'
+	on_two_left_to_right_line:   app.root.transition.direction = 'right'
+	on_two_right_to_left_line:  app.root.transition.direction = 'left'
+	on_two_down_to_up_line:  app.root.transition.direction = 'up'
 # Layout the Screen Manager
 <NuclearScreenManager>:
 	id: manager
@@ -217,8 +217,8 @@
 
 
 	Runner: 
-		on_down_to_up_line: app.root.current = 'menu'
-#		on_right_to_left_line: app.root.current = 'knob'
+		on_two_down_to_up_line: app.root.current = 'menu'
+		on_two_right_to_left_line: app.root.current = 'knob'
 
 
 
@@ -226,8 +226,8 @@
 <KnobScreen>:
 	name: 'knob'
 	Runner: 
-		on_down_to_up_line: app.root.current = 'menu'
-		on_left_to_right_line: app.root.current = 'ncp'
+		on_two_down_to_up_line: app.root.current = 'menu'
+		on_two_left_to_right_line: app.root.current = 'ncp'
 	BoxLayout:
 		orientation: 'vertical'
 
