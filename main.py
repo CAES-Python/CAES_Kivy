@@ -116,30 +116,30 @@ class NuclearControlPanel(Screen):
 		self.value4 = self.knob4value
 
 		if self.value1 >75:
-			self.warning1.turn_on_off()
-			self.warning2.turn_on_off()
-			self.warning3.turn_on_off()
-			self.warning4.turn_on_off()
+			self.warning1.turn_on_off_all()
+			self.warning2.turn_on_off_all()
+			self.warning3.turn_on_off_all()
+			self.warning4.turn_on_off_all()
 		elif self.value2 >50:
-			self.warning1.turn_on_off()
-			self.warning2.turn_on_off()
-			self.warning3.turn_on_off()
-			self.warning4.turn_on_off()
+			self.warning1.turn_on_off_all()
+			self.warning2.turn_on_off_all()
+			self.warning3.turn_on_off_all()
+			self.warning4.turn_on_off_all()
 		elif self.value3 >60:
-			self.warning1.turn_on_off()
-			self.warning2.turn_on_off()
-			self.warning3.turn_on_off()
-			self.warning4.turn_on_off()
+			self.warning1.turn_on_off_all()
+			self.warning2.turn_on_off_all()
+			self.warning3.turn_on_off_all()
+			self.warning4.turn_on_off_all()
 		elif self.value4 >85:
-			self.warning1.turn_on_off()
-			self.warning2.turn_on_off()
-			self.warning3.turn_on_off()
-			self.warning4.turn_on_off()
+			self.warning1.turn_on_off_all()
+			self.warning2.turn_on_off_all()
+			self.warning3.turn_on_off_all()
+			self.warning4.turn_on_off_all()
 		else:
-			self.warning1.turn_off()
-			self.warning2.turn_off()
-			self.warning3.turn_off()
-			self.warning4.turn_off()
+			self.warning1.turn_off_all()
+			self.warning2.turn_off_all()
+			self.warning3.turn_off_all()
+			self.warning4.turn_off_all()
 
 #Building the app. The program will look for the file "nuclear.kv" because the app is called Nuclear			
 class NuclearApp(App):

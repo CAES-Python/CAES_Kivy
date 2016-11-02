@@ -46,16 +46,28 @@
 			##################################################################Light Line#######################################################################
 				Light_indicator:	
 					id:warning1
-					color:'red'
+					num:3
+					color1:'green'
+					color2:'yellow'
+					color3:'red'
 				Light_indicator:	
 					id:warning2
-					color:'red'
+					num:3
+					color1:'green'
+					color2:'yellow'
+					color3:'red'
 				Light_indicator:	
 					id:warning3
-					color:'red'
-				Light_indicator:	
+					num:3
+					color1:'green'
+					color2:'yellow'
+					color3:'red'
+				Light_indicator:
+					num:2	
 					id:warning4
-					color:'red'
+					color1:'green'
+					#color2:'yellow'
+					color2:'red'
 
 			GridLayout:
 				cols: 4
@@ -226,8 +238,8 @@
 <KnobScreen>:
 	name: 'knob'
 	Runner: 
-		on_down_to_up_line: app.root.current = 'menu'
-		on_left_to_right_line: app.root.current = 'ncp'
+		on_two_down_to_up_line: app.root.current = 'menu'
+		on_two_left_to_right_line: app.root.current = 'ncp'
 	BoxLayout:
 		orientation: 'vertical'
 

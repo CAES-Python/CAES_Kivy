@@ -102,7 +102,7 @@ class NuclearControlPanel(Screen):
 	def warning(self,dt):
 		
 		
-self.knob1 = self.ids.knob1
+		self.knob1 = self.ids.knob1
 		self.knob2 = self.ids.knob2
 		self.knob3 = self.ids.knob3
 		self.knob4 = self.ids.knob4
@@ -116,27 +116,27 @@ self.knob1 = self.ids.knob1
 		self.value4 = self.knob4value
 
 		if self.value1 >75:
-			self.warning1.turn_on_off()
-			self.warning2.turn_on_off()
-			self.warning3.turn_on_off()
-			self.warning4.turn_on_off()
+			self.warning1.turn_on_off_all()
+			self.warning2.turn_on_off_all()
+			self.warning3.turn_on_off_all()
+			self.warning4.turn_on_off_all()
 		elif self.value2 >50:
-			self.warning1.turn_on_off()
-			self.warning2.turn_on_off()
-			self.warning3.turn_on_off()
-			self.warning4.turn_on_off()
+			self.warning1.turn_on_off_all()
+			self.warning2.turn_on_off_all()
+			self.warning3.turn_on_off_all()
+			self.warning4.turn_on_off_all()
 		elif self.value3 >60:
-			self.warning1.turn_on_off()
-			self.warning2.turn_on_off()
-			self.warning3.turn_on_off()
-			self.warning4.turn_on_off()
+			self.warning1.turn_on_off_all()
+			self.warning2.turn_on_off_all()
+			self.warning3.turn_on_off_all()
+			self.warning4.turn_on_off_all()
 		elif self.value4 >85:
-			self.warning1.turn_on_off()
-			self.warning2.turn_on_off()
-			self.warning3.turn_on_off()
-			self.warning4.turn_on_off()
+			self.warning1.turn_on_off_all()
+			self.warning2.turn_on_off_all()
+			self.warning3.turn_on_off_all()
+			self.warning4.turn_on_off_all()
 		else:
-			self.warning1.turn_off()
+			self.warning1.turn_off_all()
 			self.warning2.turn_off()
 			self.warning3.turn_off()
 			self.warning4.turn_off()
