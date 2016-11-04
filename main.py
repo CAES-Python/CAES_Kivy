@@ -52,6 +52,8 @@ class NCPScreen(Screen):
 	pass
 class MenuScreen(Screen):
 	pass
+class MyPanel(Screen):
+	pass
 class KnobScreen(Screen):
 
 	def __init__(self, **kwargs):
@@ -115,22 +117,25 @@ class NuclearControlPanel(Screen):
 		self.value3 = self.knob3value
 		self.value4 = self.knob4value
 
-		if self.value1 >75:
+		if self.value1 >  50:
+			self.warning1.turn_off_all()
+			if self.value1 < 75:
+				self.warning1.turn_on_l2()
+			else:
+				self.warning1.turn_off_l2()
+				self.warning1.turn_on_off_l3()
+
+		elif self.value2 > 50:
 			self.warning1.turn_on_off_all()
 			self.warning2.turn_on_off_all()
 			self.warning3.turn_on_off_all()
 			self.warning4.turn_on_off_all()
-		elif self.value2 >50:
+		elif self.value3 > 60:
 			self.warning1.turn_on_off_all()
 			self.warning2.turn_on_off_all()
 			self.warning3.turn_on_off_all()
 			self.warning4.turn_on_off_all()
-		elif self.value3 >60:
-			self.warning1.turn_on_off_all()
-			self.warning2.turn_on_off_all()
-			self.warning3.turn_on_off_all()
-			self.warning4.turn_on_off_all()
-		elif self.value4 >85:
+		elif self.value4 > 85:
 			self.warning1.turn_on_off_all()
 			self.warning2.turn_on_off_all()
 			self.warning3.turn_on_off_all()
@@ -140,6 +145,10 @@ class NuclearControlPanel(Screen):
 			self.warning2.turn_off_all()
 			self.warning3.turn_off_all()
 			self.warning4.turn_off_all()
+			self.warning1.turn_on_l1()
+			self.warning2.turn_on_l1()
+			self.warning3.turn_on_l1()
+			self.warning4.turn_on_l1()
 
 #Building the app. The program will look for the file "nuclear.kv" because the app is called Nuclear			
 class NuclearApp(App):

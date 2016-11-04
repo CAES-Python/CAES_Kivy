@@ -10,6 +10,7 @@
 	MenuScreen:	
 	NuclearControlPanel:
 	KnobScreen:
+	MyPanel:
 
 # Layout the Menu screen
 <MenuScreen>:
@@ -30,6 +31,10 @@
 				text:'Knob Panel'
 				font_size:30
 				on_release:app.root.current ='knob'
+			Button:
+				text:'Real Panel'
+				font_size:30
+				on_release:app.root.current ='panel1'
 # Layout the NCP screen		
 <NuclearControlPanel>:
 
@@ -50,24 +55,40 @@
 					color1:'green'
 					color2:'yellow'
 					color3:'red'
+					setting: False
+					pos_l1: [25,100]
+					pos_l2: [100,100]
+					pos_l3: [175,100]
 				Light_indicator:	
 					id:warning2
 					num:3
 					color1:'green'
 					color2:'yellow'
 					color3:'red'
+					setting: False
+					pos_l1: [25,100]
+					pos_l2: [100,100]
+					pos_l3: [175,100]
 				Light_indicator:	
 					id:warning3
 					num:3
 					color1:'green'
 					color2:'yellow'
 					color3:'red'
+					setting: False
+					pos_l1: [25,100]
+					pos_l2: [100,100]
+					pos_l3: [175,100]
 				Light_indicator:
-					num:2	
+					num:3	
 					id:warning4
 					color1:'green'
-					#color2:'yellow'
-					color2:'red'
+					color2:'yellow'
+					color3:'red'
+					setting: False
+					pos_l1: [25,100]
+					pos_l2: [100,100]
+					pos_l3: [175,100]
 
 			GridLayout:
 				cols: 4
@@ -127,7 +148,7 @@
 					knobimg_source: "/usr/lib/python2.7/dist-packages/kivy/garden/knob/img/knob_metal.png"
 					knobimg_size: 1
 					show_label: False
-					show_marker: True
+					show_marker: False
 				Knob:
 					id: knob3
 					size:150,150
@@ -138,7 +159,7 @@
 					knobimg_source: "/usr/lib/python2.7/dist-packages/kivy/garden/knob/img/knob_metal.png"
 					knobimg_size: 0.9
 					show_label: False
-					show_marker: True
+					show_marker: False
 				Knob:
 					id: knob4
 					size:150,150
@@ -149,7 +170,7 @@
 					knobimg_source: "/usr/lib/python2.7/dist-packages/kivy/garden/knob/img/knob_metal.png"
 					knobimg_size: 0.9
 					show_label: False
-					show_marker: True
+					show_marker: False
 
 			##################################################################Label Line###########################################################
 			GridLayout:
@@ -231,6 +252,7 @@
 	Runner: 
 		on_two_down_to_up_line: app.root.current = 'menu'
 		on_two_right_to_left_line: app.root.current = 'knob'
+		on_two_left_to_right_line: app.root.current = 'panel1'
 
 
 
@@ -299,6 +321,53 @@
 				text: 'Menu'
 				font_size: 30
 				on_release: app.root.current ='menu'
+
+
+
+<MyPanel>:
+	name:'panel1'
+	Runner: 
+		on_two_down_to_up_line: app.root.current = 'menu'
+		on_two_right_to_left_line: app.root.current = 'ncp'
+	BoxLayout:
+		Gauge:
+			id: gauge1
+			value:knob.value
+			file_gauge:"~/.kivy/garden/garden.gauge/cadran.png"
+		Light_indicator:	
+			id:warning1
+			orientation: 'vertical'
+			size_lights: [30,30]
+			num:3
+			color1:'green'
+			color2:'yellow'
+			color3:'red'
+			setting: False
+			pos_l1: [100,175]
+			pos_l2: [100,100]
+			pos_l3: [100,25]
+		Gauge:
+			id: gauge2
+			value:knob.value
+			file_gauge:"~/.kivy/garden/garden.gauge/cadran.png"
+
+
+		Knob:
+			id: knob
+			size:150,150
+			value: 0
+			min: 0
+			max: 100
+			step: 1
+			knobimg_source: "/usr/lib/python2.7/dist-packages/kivy/garden/knob/img/knob_metal.png"
+			knobimg_size: 0.9
+			show_label: False
+			show_marker: False
+
+		Gauge:
+			id: gauge3
+			value:knob.value
+			file_gauge:"~/.kivy/garden/garden.gauge/cadran.png"
 
 
 
