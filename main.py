@@ -118,16 +118,21 @@ class NuclearControlPanel(Screen):
 		self.value4 = self.knob4value
 
 		if self.value1 >  50:
-			self.warning1.turn_off_all()
 			if self.value1 < 75:
+				self.warning1.turn_off_l1()
 				self.warning1.turn_on_l2()
-			else:
+			elif self.value1 > 75 and self.value1 < 90:
+				self.warning1.turn_off_l1()
 				self.warning1.turn_off_l2()
 				self.warning1.turn_on_off_l3()
+			elif self.value1>90:
+				self.warning1.turn_off_all()
+				self.warning1.turn_on_off_all()
 
 		elif self.value2 > 50:
 			self.warning1.turn_on_off_all()
-			self.warning2.turn_on_off_all()
+			self.warning2.turn_off_l1()
+			self.warning2.turn_on_off_l3()
 			self.warning3.turn_on_off_all()
 			self.warning4.turn_on_off_all()
 		elif self.value3 > 60:
@@ -153,7 +158,7 @@ class NuclearControlPanel(Screen):
 #Building the app. The program will look for the file "nuclear.kv" because the app is called Nuclear			
 class NuclearApp(App):
 	def build(self):
-		Config.set('graphics','fullscreen', 'auto')
+		Config.set('graphics','fullscreen', True)
 		return NuclearScreenManager()
 # Run the program
 if __name__ == "__main__":
