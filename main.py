@@ -23,6 +23,7 @@ from kivy.uix.anchorlayout import AnchorLayout
 
 from kivy.garden.knob import Knob
 from kivy.garden.gauge import Gauge
+from kivy.garden.gauges import Gauges
 from kivy.garden.light_indicator import  Light_indicator
 
 from kivy.properties import ListProperty, ObjectProperty
@@ -52,8 +53,29 @@ class NCPScreen(Screen):
 	pass
 class MenuScreen(Screen):
 	pass
+''''
 class MyPanel(Screen):
-	pass
+	def __init__(self, **kwargs):
+			
+		super(MyPanel, self).__init__(**kwargs)
+		Clock.schedule_once(self._finish_init)
+		Clock.schedule_interval(self.warning,0.1)
+
+	def _finish_init(self,dt):
+		self.gauge1 = self.NuclearControlPanel.ids.gauge1
+		self.knob1 = self.ids.knob1
+		self.knob2 = self.ids.knob2
+		self.knob3 = self.ids.knob3
+		self.knob4 = self.ids.knob4
+		self.knob1value = self.knob1.value
+		self.knob2value = self.knob2.value
+		self.knob3value = self.knob3.value
+		self.knob4value = self.knob4.value
+		self.warning1 = self.ids.warning1
+		self.warning2 = self.ids.warning2
+		self.warning3 = self.ids.warning3
+		self.warning4 = self.ids.warning4
+'''
 class KnobScreen(Screen):
 
 	def __init__(self, **kwargs):
