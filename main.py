@@ -23,6 +23,7 @@ from kivy.uix.anchorlayout import AnchorLayout
 
 from kivy.garden.knob import Knob
 from kivy.garden.gauge import Gauge
+from kivy.garden.gauges import Gauges
 from kivy.garden.light_indicator import  Light_indicator
 
 from kivy.properties import ListProperty, ObjectProperty
@@ -52,19 +53,83 @@ class NCPScreen(Screen):
 	pass
 class MenuScreen(Screen):
 	pass
+
 class MyPanel(Screen):
-	pass
+	def __init__(self, **kwargs):
+			
+		super(MyPanel, self).__init__(**kwargs)
+		Clock.schedule_once(self._finish_init,0.5)
+		Clock.schedule_interval(self.warning,0.1)
+#experiment with getting ids from different screens.
+	def _finish_init(self,dt):
+		 self.NCPvalue1=self.manager.get_screen('ncp').ids.knob1.value 
+	def warning(self,dt):
+		
+		
+		self.knob = self.ids.knob
+		self.knob2 = self.ids.knob2
+		self.warning1 = self.ids.warning1
+		self.warning2 = self.ids.warning2
+		self.knob1value = self.knob.value
+		self.knob2value = self.knob2.value
+		self.value1 = self.knob1value
+		self.value2 = self.knob2value
+		self.NCPvalue1=self.manager.get_screen('ncp').ids.knob1.value 
+		if self.NCPvalue1 <  75:
+			if self.value1 >  50:
+				if self.value1 < 75:
+					self.warning1.turn_off_l1()
+					self.warning1.turn_off_l3()
+					self.warning1.turn_on_l2()
+				elif self.value1 > 75 and self.value1 < 90:
+					self.warning1.turn_off_l1()
+					self.warning1.turn_off_l2()
+					self.warning1.turn_on_off_l3()
+				elif self.value1>90:
+					self.warning1.turn_off_all()
+					self.warning1.turn_on_off_all()
+			else:
+				self.warning1.turn_off_all()
+				self.warning1.turn_on_l1()
+			if self.value2 >  50:
+				if self.value2 < 75:
+					self.warning2.turn_off_l1()
+					self.warning2.turn_off_l3()
+					self.warning2.turn_on_l2()
+				elif self.value2 > 75 and self.value2 < 90:
+					self.warning2.turn_off_l1()
+					self.warning2.turn_off_l2()
+					self.warning2.turn_on_off_l3()
+				elif self.value2>90:
+					self.warning2.turn_off_all()
+					self.warning2.turn_on_off_all()
+			else:
+				self.warning2.turn_off_all()
+				self.warning2.turn_on_l1()
+
+		else :
+			
+			self.warning1.turn_off_l1()
+			self.warning1.turn_off_l2()
+			self.warning1.turn_on_all()
+			self.warning2.turn_off_l1()
+			self.warning2.turn_off_l2()
+			self.warning2.turn_on_all()
+			
+
+
+
 class KnobScreen(Screen):
 
 	def __init__(self, **kwargs):
 		super(KnobScreen, self).__init__(**kwargs)
-		Clock.schedule_once(self._finish_init)
+		#Clock.schedule_once(self._finish_init)
 		
 
 
 	def _finish_init(self,dt):
-		self.knob_value = self.ids.knob1.value
-
+		 self.NCPknob1.value=self.manager.get_screen('NCP').ids.knob1.value 
+		
 
 		
 	def pause():
@@ -120,6 +185,7 @@ class NuclearControlPanel(Screen):
 		if self.value1 >  50:
 			if self.value1 < 75:
 				self.warning1.turn_off_l1()
+				self.warning1.turn_off_l3()
 				self.warning1.turn_on_l2()
 			elif self.value1 > 75 and self.value1 < 90:
 				self.warning1.turn_off_l1()
