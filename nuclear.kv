@@ -4,18 +4,32 @@
 	on_two_left_to_right_line:   app.root.transition.direction = 'right'
 	on_two_right_to_left_line:  app.root.transition.direction = 'left'
 	on_two_down_to_up_line:  app.root.transition.direction = 'up'
+	on_two_up_to_down_line:  app.root.transition.direction = 'down'
 # Layout the Screen Manager
 <NuclearScreenManager>:
 	id: manager
-	MenuScreen:	
+	MenuScreen:
+		id: menu
+		name:'menu'
+		manager:manager	
 	NuclearControlPanel:
+		id: NCP
+		name:'ncp'
+		manager:manager	
 	KnobScreen:
+		id:knob_screen
+		name:'knob'
+		manager:manager	
 	MyPanel:
+		id: panel1
+		name:'panel1'
+		manager:manager	
 
 # Layout the Menu screen
 <MenuScreen>:
-	name: 'menu'
-
+	#name: 'menu'
+	Runner:
+		on_two_up_to_down_line:app.root.current =app.root.previous()
 	BoxLayout:
 		orientation: 'vertical'
 		Label:
@@ -27,7 +41,7 @@
 				font_size:30
 				on_release:app.root.current ='panel1'
 			Button:
-				text:'Nuclear Control Panel'
+				text:'Nuclear Control \n'+(' '*10 )+'Panel'
 				font_size:30
 				on_release:app.root.current ='ncp'
 			Button:
@@ -38,7 +52,7 @@
 # Layout the NCP screen		
 <NuclearControlPanel>:
 
-	name: 'ncp'
+	#name: 'ncp'
 
 	FloatLayout:
 		BoxLayout:
@@ -261,7 +275,7 @@
 
 	
 <KnobScreen>:
-	name: 'knob'
+	#name: 'knob'
 	Runner: 
 		on_two_down_to_up_line: app.root.current = 'menu'
 		on_two_left_to_right_line: app.root.current = 'ncp'
@@ -328,7 +342,7 @@
 
 
 <MyPanel>:
-	name:'panel1'
+	#name:'panel1'
 	Runner: 
 		on_two_down_to_up_line: app.root.current = 'menu'
 		on_two_right_to_left_line: app.root.current = 'ncp'
@@ -379,7 +393,7 @@
 
 			Gauges:
 				id: gauge3
-				value:knob.value
+				value:knob.value #value:root.manager.NCP.knob1.value
 				gauge_type:'60'
 				size_gauge:256
 
