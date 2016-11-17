@@ -48,6 +48,7 @@ class Runner(gesture.GestureBox):
 #define the Screen Manager
 class NuclearScreenManager(ScreenManager):
 	pass
+	
 #define the screens
 class NCPScreen(Screen):
 	pass
@@ -60,9 +61,13 @@ class MyPanel(Screen):
 		super(MyPanel, self).__init__(**kwargs)
 		Clock.schedule_once(self._finish_init,0.5)
 		Clock.schedule_interval(self.warning,0.1)
+		
 #experiment with getting ids from different screens.
 	def _finish_init(self,dt):
-		 self.NCPvalue1=self.manager.get_screen('ncp').ids.knob1.value 
+		self.NCPvalue1=self.manager.get_screen('ncp').ids.knob1.value 
+		self.NCPvalue2=self.manager.get_screen('ncp').ids.knob2.value
+		self.NCPvalue3=self.manager.get_screen('ncp').ids.knob3.value
+		self.NCPvalue4=self.manager.get_screen('ncp').ids.knob4.value 
 	def warning(self,dt):
 		
 		
@@ -74,47 +79,56 @@ class MyPanel(Screen):
 		self.knob2value = self.knob2.value
 		self.value1 = self.knob1value
 		self.value2 = self.knob2value
-		self.NCPvalue1=self.manager.get_screen('ncp').ids.knob1.value 
-		if self.NCPvalue1 <  75:
-			if self.value1 >  50:
-				if self.value1 < 75:
-					self.warning1.turn_off_l1()
-					self.warning1.turn_off_l3()
-					self.warning1.turn_on_l2()
-				elif self.value1 > 75 and self.value1 < 90:
-					self.warning1.turn_off_l1()
-					self.warning1.turn_off_l2()
-					self.warning1.turn_on_off_l3()
-				elif self.value1>90:
-					self.warning1.turn_off_all()
-					self.warning1.turn_on_off_all()
-			else:
-				self.warning1.turn_off_all()
-				self.warning1.turn_on_l1()
-			if self.value2 >  50:
-				if self.value2 < 75:
-					self.warning2.turn_off_l1()
-					self.warning2.turn_off_l3()
-					self.warning2.turn_on_l2()
-				elif self.value2 > 75 and self.value2 < 90:
-					self.warning2.turn_off_l1()
-					self.warning2.turn_off_l2()
-					self.warning2.turn_on_off_l3()
-				elif self.value2>90:
-					self.warning2.turn_off_all()
-					self.warning2.turn_on_off_all()
-			else:
-				self.warning2.turn_off_all()
-				self.warning2.turn_on_l1()
+		self.NCPvalue1=self.manager.get_screen('ncp').ids.knob1.value
+		self.NCPvalue2=self.manager.get_screen('ncp').ids.knob2.value
+		self.NCPvalue3=self.manager.get_screen('ncp').ids.knob3.value
+		self.NCPvalue4=self.manager.get_screen('ncp').ids.knob4.value 
+		if (self.NCPvalue1 <  75 or self.NCPvalue2 <  50 or self.NCPvalue3 < 60 or self.NCPvalue4 < 90 or self.value2 <  50) and self.value1 >  50:
+			
+			if self.value1 < 75:
+				self.warning1.turn_off_l1()
+				self.warning1.turn_off_l3()
+				self.warning1.turn_on_l2()
+			elif self.value1 > 75 :
+				self.warning1.turn_off_l1()
+				self.warning1.turn_off_l2()
+				self.warning1.turn_on_off_l3()
+
+		elif (self.NCPvalue1 <  75 or self.NCPvalue2 <  50 or self.NCPvalue3 < 60 or self.NCPvalue4 < 90 or self.value2 <  50) and self.value1< 50:
+			self.warning1.turn_off_all()
+			self.warning1.turn_on_l1()
 
 		else :
 			
 			self.warning1.turn_off_l1()
 			self.warning1.turn_off_l2()
-			self.warning1.turn_on_off_all()
+			self.warning1.turn_on_all()
 			self.warning2.turn_off_l1()
 			self.warning2.turn_off_l2()
-			self.warning2.turn_on_off_all()
+			self.warning2.turn_on_all()
+
+		if (self.NCPvalue1 <  75 or self.NCPvalue2 <  50 or self.NCPvalue3 < 60 or self.NCPvalue4 < 90 or self.value1 <  50) and self.value2 >  50:
+			
+			if self.value2 < 75:
+				self.warning2.turn_off_l1()
+				self.warning2.turn_off_l3()
+				self.warning2.turn_on_l2()
+			elif self.value2 > 75:
+				self.warning2.turn_off_l1()
+				self.warning2.turn_off_l2()
+				self.warning2.turn_on_off_l3()
+		elif  (self.NCPvalue1 <  75 or self.NCPvalue2 <  50 or self.NCPvalue3 < 60 or self.NCPvalue4 < 90 or self.value1 <  50) and self.value2<50:
+			self.warning2.turn_off_all()
+			self.warning2.turn_on_l1()
+
+		else :
+			
+			self.warning1.turn_off_l1()
+			self.warning1.turn_off_l2()
+			self.warning1.turn_on_all()
+			self.warning2.turn_off_l1()
+			self.warning2.turn_off_l2()
+			self.warning2.turn_on_all()
 			
 
 
