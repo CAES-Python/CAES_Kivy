@@ -24,6 +24,10 @@
 		id: panel1
 		name:'panel1'
 		manager:manager	
+	NSRScreen:
+		id:nsr
+		name:'nsr'
+		manager:manager
 
 # Layout the Menu screen
 <MenuScreen>:
@@ -36,6 +40,10 @@
 			text:'Welcome to the Menu!'
 			font_size:50
 		BoxLayout:
+			Button:
+				text:'NSR Panel'
+				font_size:30
+				on_release:app.root.current ='nsr'
 			Button:
 				text:'Real Panel'
 				font_size:30
@@ -346,6 +354,7 @@
 	Runner: 
 		on_two_down_to_up_line: app.root.current = 'menu'
 		on_two_right_to_left_line: app.root.current = 'ncp'
+		on_two_left_to_right_line: app.root.current = 'nsr'
 	BoxLayout:
 		orientation:'vertical'
 		BoxLayout:
@@ -446,3 +455,244 @@
 				gauge_type:'60'
 				size_gauge:256
 
+
+<NSRScreen>:
+	Runner: 
+		on_two_down_to_up_line: app.root.current = 'menu'
+		on_two_right_to_left_line: app.root.current = 'panel1'
+		
+	BoxLayout:
+		BoxLayout:
+			orientation:'vertical'
+			BoxLayout:
+				orientation:'vertical'
+				Light_indicator:
+					id:TL_LI_R1
+					orientation: 'horizontal'
+					num:2
+					color1:'white'
+					color2: 'red'
+					pos_l1:[50,100]
+					pos_l2:[150,100]
+					label_on:True
+					l1_label:'On'
+					l2_label:'off'
+					bol1:True
+					setting_on:False
+				Light_indicator:
+					id:TL_LI_R2
+					orientation: 'horizontal'
+					num:2
+					color1:'green'
+					color2: 'red'
+					pos_l1:[50,100]
+					pos_l2:[150,100]
+					label_on:False
+					bol1:True
+					setting_on:False
+			Light_indicator:
+				id:ML_LI_R2
+				orientation: 'vertical'
+				num:3
+				color1:'green'
+				color2:'yellow'
+				color3:'red'
+				pos_l1:[100,175]
+				pos_l2:[100,100]
+				pos_l3:[100,25]
+				label_on:False
+				bol1:True
+				setting_on:False
+			Label:
+				text: 'speaker'
+				font_size:20
+
+		BoxLayout:
+			orientation:'vertical'
+			BoxLayout:
+				ToggleButton:
+					size_hint:[0.5,0.5]
+					text:'Button 1'
+					group:'group1'
+					canvas:
+						Color:
+							rgba: 1, 0, 0, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+				ToggleButton:
+					size_hint:[0.5,0.5]
+					text:'Button 2'
+					group:'group1'
+					state:'down'
+					canvas:
+						Color:
+							rgba: 1, 0, 0, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+			BoxLayout:
+				ToggleButton:
+					size_hint:[0.5,0.5]
+					text:'Button 3'
+					group:'group1'
+					canvas:
+						Color:
+							rgba: 1, 0, 0, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+				ToggleButton:
+					size_hint:[0.5,0.5]
+					text:'Button 4'
+					group:'group1'
+					canvas:
+						Color:
+							rgba: 1, 0, 0, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+			BoxLayout:
+				ToggleButton:
+					size_hint:[0.5,0.5]
+					text:'Button 5'
+					group:'group2'
+					canvas:
+						Color:
+							rgba: 0, 1, 0, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+				ToggleButton:
+					size_hint:[0.5,0.5]
+					text:'Button 6'
+					group:'group2'
+					canvas:
+						Color:
+							rgba: 0, 1, 0, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+			BoxLayout:
+				ToggleButton:
+					size_hint:[0.5,0.5]
+					text:'Button 7'
+					group:'group2'
+					canvas:
+						Color:
+							rgba: 0, 1, 0, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+				ToggleButton:
+					size_hint:[0.5,0.5]
+					text:'Button 8'
+					group:'group2'
+					state: 'down'
+					canvas:
+						Color:
+							rgba: 0, 1, 0, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+			BoxLayout:
+				orientation:'vertical'
+				ToggleButton:
+					size_hint:[0.5,0.5]
+					text:'Button 9'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 1, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+				ToggleButton:
+					size_hint:[0.5,0.5]
+					text:'Button 10'
+					group:'group3'
+					state: 'down'
+					canvas:
+						Color:
+							rgba: 1, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+				ToggleButton:
+					size_hint:[0.5,0.5]
+					text:'Button 11'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 1, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+
+
+
+		BoxLayout:
+			orientation: 'vertical'
+			Button:
+				text: 'BIG'	
+		BoxLayout:
+			orientation: 'vertical'
+			BoxLayout:
+				Label:
+					text:""
+			BoxLayout:
+				orientation:'vertical'
+				Label:
+					text: 'Key'
+					font_size: 20
+				Light_indicator:
+					num:1
+					color1:'white'
+					setting_on: False
+					label_on:False
+			BoxLayout:
+				ToggleButton:
+
+					text:'Button 12'
+					group:'group4'
+					canvas:
+						Color:
+							rgba: 1, 0, 0, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+
+					text:'Button 13'
+					group:'group4'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+			BoxLayout:
+				ToggleButton:
+
+					text:'Button 14'
+					group:'group5'
+					canvas:
+						Color:
+							rgba: 1, 0, 0, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+
+					text:'Button 15'
+					group:'group5'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
