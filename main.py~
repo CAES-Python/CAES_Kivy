@@ -54,6 +54,12 @@ class NuclearScreenManager(ScreenManager):
 class NCPScreen(Screen):
 	pass
 class MenuScreen(Screen):
+	def stop(self):
+		sys.exit()
+
+class NSRScreen(Screen):
+	pass
+class ToggleScreen(Screen):
 	pass
 
 class MyPanel(Screen):

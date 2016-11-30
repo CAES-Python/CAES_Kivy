@@ -54,9 +54,12 @@ class NuclearScreenManager(ScreenManager):
 class NCPScreen(Screen):
 	pass
 class MenuScreen(Screen):
-	pass
+	def stop(self):
+		sys.exit()
 
 class NSRScreen(Screen):
+	pass
+class ToggleScreen(Screen):
 	pass
 
 class MyPanel(Screen):
@@ -139,27 +142,6 @@ class MyPanel(Screen):
 			self.warning2.turn_on_l1()
 			
 
-
-
-class KnobScreen(Screen):
-
-	def __init__(self, **kwargs):
-		super(KnobScreen, self).__init__(**kwargs)
-		#Clock.schedule_once(self._finish_init)
-		
-
-
-	def _finish_init(self,dt):
-		 self.NCPknob1.value=self.manager.get_screen('NCP').ids.knob1.value 
-		
-
-		
-	def pause():
-		time.sleep(5)
-	def stop(self):
-		sys.exit()
-	def start(self):
-		pass
 
 
 class NuclearControlPanel(Screen):

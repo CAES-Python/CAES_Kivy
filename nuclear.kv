@@ -16,10 +16,7 @@
 		id: NCP
 		name:'ncp'
 		manager:manager	
-	KnobScreen:
-		id:knob_screen
-		name:'knob'
-		manager:manager	
+
 	MyPanel:
 		id: panel1
 		name:'panel1'
@@ -28,12 +25,16 @@
 		id:nsr
 		name:'nsr'
 		manager:manager
+	ToggleScreen:
+		id:toggle
+		name:'toggle'
+		manager:manager
 
 # Layout the Menu screen
 <MenuScreen>:
 	#name: 'menu'
 	Runner:
-		on_two_up_to_down_line:app.root.current =app.root.previous()
+		on_two_down_to_up_line:app.root.current =app.root.previous()
 	BoxLayout:
 		orientation: 'vertical'
 		Label:
@@ -41,21 +42,14 @@
 			font_size:50
 		BoxLayout:
 			Button:
-				text:'NSR Panel'
+				text:'Start'
 				font_size:30
 				on_release:app.root.current ='nsr'
 			Button:
-				text:'Real Panel'
+				text:'Exit'
 				font_size:30
-				on_release:app.root.current ='panel1'
-			Button:
-				text:'Nuclear Control \n'+(' '*10 )+'Panel'
-				font_size:30
-				on_release:app.root.current ='ncp'
-			Button:
-				text:'Knob Panel'
-				font_size:30
-				on_release:app.root.current ='knob'
+				on_release:root.stop()
+		
 
 # Layout the NCP screen		
 <NuclearControlPanel>:
@@ -275,84 +269,17 @@
 
 
 	Runner: 
-		on_two_down_to_up_line: app.root.current = 'menu'
-		on_two_right_to_left_line: app.root.current = 'knob'
+		on_two_up_to_down_line: app.root.current = 'menu'
 		on_two_left_to_right_line: app.root.current = 'panel1'
 
 
 
 	
-<KnobScreen>:
-	#name: 'knob'
-	Runner: 
-		on_two_down_to_up_line: app.root.current = 'menu'
-		on_two_left_to_right_line: app.root.current = 'ncp'
-	BoxLayout:
-		orientation: 'vertical'
-
-		Gauge: 
-			value: knob1.value
-			file_gauge:"~/.kivy/garden/garden.gauge/cadran.png"
-		BoxLayout:
-			Knob:
-				id: knob1
-				size: 100, 100
-				value: 0
-				min: 0
-				max:100
-				step: 1
-				knobimg_source: "/usr/lib/python2.7/dist-packages/kivy/garden/knob/img/knob_metal.png"
-				knobimg_size: 0.9
-				show_label: True
-				show_marker: True
-				
-			Label:
-				id:label
-				text: str(knob1.value)
-		BoxLayout:
-			size_hint:[1,0.5]
-			Label:
-				text:""
-
-			Button:
-				id: Start_button
-				size_hint:[1, 1]
-				text: 'Start!!!'
-				font_size: 30
-				on_press:root.start()
-
-				canvas:
-					Color:
-						rgba: 0, 1, 0, 0.5
-					Rectangle:
-						size: self.size
-						pos: self.pos
-			Button:
-				id: Stop_button
-				size_hint:[1, 1]
-				text: 'SCRAM!!!'
-				font_size: 30
-				on_press:root.stop()
-
-				canvas:
-					Color:
-						rgba: 1, 0, 0, 0.5
-					Rectangle:
-						size: self.size
-						pos: self.pos
-			Button:
-				id:menubuttonknob
-				size_hint:[1, 1]
-				text: 'Menu'
-				font_size: 30
-				on_release: app.root.current ='menu'
-
-
 
 <MyPanel>:
 	#name:'panel1'
 	Runner: 
-		on_two_down_to_up_line: app.root.current = 'menu'
+		on_two_up_to_down_line: app.root.current = 'menu'
 		on_two_right_to_left_line: app.root.current = 'ncp'
 		on_two_left_to_right_line: app.root.current = 'nsr'
 	BoxLayout:
@@ -458,11 +385,13 @@
 
 <NSRScreen>:
 	Runner: 
-		on_two_down_to_up_line: app.root.current = 'menu'
+		on_two_down_to_up_line: app.root.current = 'toggle'
+		on_two_up_to_down_line: app.root.current = 'menu'
 		on_two_right_to_left_line: app.root.current = 'panel1'
 		
 	BoxLayout:
 		BoxLayout:
+			size_hint: 0.5,1
 			orientation:'vertical'
 			BoxLayout:
 				orientation:'vertical'
@@ -508,10 +437,18 @@
 				font_size:20
 
 		BoxLayout:
+			size_hint:.5,1
 			orientation:'vertical'
-			BoxLayout:
+			GridLayout:
+				cols:2
+				rows:2
+				spacing: 50, 20
+				pos_hint: {'center_x':0.5, 'center_y':0.25}
+				
+				
 				ToggleButton:
-					size_hint:[0.5,0.5]
+					size_hint:None, None
+					size: 100,100
 					text:'Button 1'
 					group:'group1'
 					canvas:
@@ -520,8 +457,11 @@
 						Rectangle:
 							size: self.size
 							pos: self.pos
+
+
 				ToggleButton:
-					size_hint:[0.5,0.5]
+					size_hint:None, None
+					size: 100,100
 					text:'Button 2'
 					group:'group1'
 					state:'down'
@@ -531,9 +471,10 @@
 						Rectangle:
 							size: self.size
 							pos: self.pos
-			BoxLayout:
+			
 				ToggleButton:
-					size_hint:[0.5,0.5]
+					size_hint:None, None
+					size: 100,100
 					text:'Button 3'
 					group:'group1'
 					canvas:
@@ -543,7 +484,8 @@
 							size: self.size
 							pos: self.pos
 				ToggleButton:
-					size_hint:[0.5,0.5]
+					size_hint:None, None
+					size: 100,100
 					text:'Button 4'
 					group:'group1'
 					canvas:
@@ -553,9 +495,15 @@
 							size: self.size
 							pos: self.pos
 
-			BoxLayout:
+			GridLayout:
+				cols:2
+				rows:2
+				spacing: 50, 20
+				pos_hint: {'center_x':0.5, 'center_y':0.25}
+
 				ToggleButton:
-					size_hint:[0.5,0.5]
+					size_hint:None, None
+					size: 100,100
 					text:'Button 5'
 					group:'group2'
 					canvas:
@@ -565,7 +513,8 @@
 							size: self.size
 							pos: self.pos
 				ToggleButton:
-					size_hint:[0.5,0.5]
+					size_hint:None, None
+					size: 100,100
 					text:'Button 6'
 					group:'group2'
 					canvas:
@@ -574,9 +523,10 @@
 						Rectangle:
 							size: self.size
 							pos: self.pos
-			BoxLayout:
+			
 				ToggleButton:
-					size_hint:[0.5,0.5]
+					size_hint:None, None
+					size: 100,100
 					text:'Button 7'
 					group:'group2'
 					canvas:
@@ -586,7 +536,8 @@
 							size: self.size
 							pos: self.pos
 				ToggleButton:
-					size_hint:[0.5,0.5]
+					size_hint:None, None
+					size: 100,100
 					text:'Button 8'
 					group:'group2'
 					state: 'down'
@@ -596,10 +547,14 @@
 						Rectangle:
 							size: self.size
 							pos: self.pos
-			BoxLayout:
-				orientation:'vertical'
+			GridLayout:
+				cols:1
+				rows:3
+				spacing: 50, 20
+				pos_hint: {'center_x':0.75, 'center_y':0.25}
 				ToggleButton:
-					size_hint:[0.5,0.5]
+					size_hint:None, None
+					size: 100,100
 					text:'Button 9'
 					group:'group3'
 					canvas:
@@ -609,7 +564,8 @@
 							size: self.size
 							pos: self.pos
 				ToggleButton:
-					size_hint:[0.5,0.5]
+					size_hint:None, None
+					size: 100,100
 					text:'Button 10'
 					group:'group3'
 					state: 'down'
@@ -620,7 +576,8 @@
 							size: self.size
 							pos: self.pos
 				ToggleButton:
-					size_hint:[0.5,0.5]
+					size_hint:None, None
+					size: 100,100
 					text:'Button 11'
 					group:'group3'
 					canvas:
@@ -635,9 +592,11 @@
 
 		BoxLayout:
 			orientation: 'vertical'
+			size_hint: 1.5,1
 			Button:
 				text: 'BIG'	
 		BoxLayout:
+			size_hint: .5,1
 			orientation: 'vertical'
 			BoxLayout:
 				Label:
@@ -649,12 +608,20 @@
 					font_size: 20
 				Light_indicator:
 					num:1
+					pos_l1: 130,40
 					color1:'white'
 					setting_on: False
 					label_on:False
-			BoxLayout:
+				Label:
+					text:""
+			GridLayout:
+				cols:2
+				rows:2
+				spacing: 50, 60
+				pos_hint: {'center_x':0.6, 'center_y':0.25}
 				ToggleButton:
-
+					size_hint:None, None
+					size: 100,100
 					text:'Button 12'
 					group:'group4'
 					canvas:
@@ -665,7 +632,8 @@
 							pos: self.pos
 
 				ToggleButton:
-
+					size_hint:None, None
+					size: 100,100
 					text:'Button 13'
 					group:'group4'
 					canvas:
@@ -674,9 +642,10 @@
 						Rectangle:
 							size: self.size
 							pos: self.pos
-			BoxLayout:
+			
 				ToggleButton:
-
+					size_hint:None, None
+					size: 100,100
 					text:'Button 14'
 					group:'group5'
 					canvas:
@@ -687,7 +656,8 @@
 							pos: self.pos
 
 				ToggleButton:
-
+					size_hint:None, None
+					size: 100,100
 					text:'Button 15'
 					group:'group5'
 					canvas:
@@ -696,3 +666,600 @@
 						Rectangle:
 							size: self.size
 							pos: self.pos
+
+
+
+<ToggleScreen>:
+	Runner: 
+		on_two_up_to_down_line: app.root.current = 'nsr'
+#		on_two_left_to_right_line: app.root.current = 'nsr'
+	
+	BoxLayout:
+		BoxLayout:
+			size_hint: 0.25,1
+			orientation: 'vertical'
+			Light_indicator:
+				num:3
+				orientation: 'horizontal'
+				color1:'green'
+				color2: 'green'
+				color3:'green'
+				pos_l1:[25,100]
+				pos_l2:[100,100]
+				pos_l3:[175,100]
+				label_on:False
+				bol1:True
+				bol2:True
+				bol3:True
+				setting_on:False
+			Light_indicator:
+				num:1
+				orientation: 'horizontal'
+				color1:'green'
+				pos_l1:[100,175]
+				label_on:False
+				bol1:True
+				setting_on:False
+			Label:
+				text:""
+			Label:
+				text:""
+			Label:
+				text:""
+			Label:
+				text:""
+
+
+		BoxLayout:
+			size_hint: 0.5,1
+			orientation:'vertical'
+			GridLayout:
+				rows:3
+				cols:3
+				spacing: 50, 60
+				pos_hint: {'center_x':0.6, 'center_y':0.25}
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button 1'
+					group:'group1'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button 2'
+					group:'group1'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button 3'
+					group:'group1'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button 4'
+					group:'group1'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button 5'
+					group:'group1'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button 6'
+					group:'group1'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button 7'
+					group:'group1'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button 8'
+					group:'group1'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button 9'
+					group:'group1'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+			Label:
+				text:""
+			Label:
+				text:""
+
+
+			GridLayout:
+				rows:1
+				cols:3
+				spacing: 50, 60
+				pos_hint: {'center_x':0.6, 'center_y':0.25}
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group2'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group2'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group2'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+			BoxLayout:
+				
+				
+				canvas:
+					Color:
+						rgba: 0.5,0.5,0.5,0.5
+					Rectangle:
+						size:150,150
+						pos: 400,0
+		BoxLayout:
+			orientation: 'vertical'
+			GridLayout:
+				rows:4
+				cols:8
+				spacing: 25, 30
+				pos_hint: {'center_x':0.6, 'center_y':0.25}
+				
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+				ToggleButton:
+					size_hint:None, None
+					size:50,50
+					text:'Button'
+					group:'group3'
+					canvas:
+						Color:
+							rgba: 0, 0, 1, 0.5
+						Rectangle:
+							size: self.size
+							pos: self.pos
+
+
